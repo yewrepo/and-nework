@@ -7,6 +7,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import dev.chrisbanes.insetter.Insetter
+import dev.chrisbanes.insetter.windowInsetTypesOf
 import ru.netology.nework.R
 import ru.netology.nework.databinding.ActivityMainBinding
 
@@ -24,6 +26,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+
+        Insetter.builder()
+            .margin(windowInsetTypesOf(ime = true, statusBars = true))
+            .applyToView(binding.root)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         appBarConfiguration = AppBarConfiguration.Builder(R.id.authFragment)
