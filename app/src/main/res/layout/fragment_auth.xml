@@ -43,23 +43,22 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/login_layout"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/phone_number_hint"
+                android:hint="@string/login_hint"
                 android:labelFor="@id/login_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/login_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    app:mask="+7(###)###-##-##" />
+                    android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_layout"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password_hint"
@@ -75,7 +74,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/login_button"
-                style="@style/Widget.Material3.Button.UnelevatedButton"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"

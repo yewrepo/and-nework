@@ -53,7 +53,7 @@ class ApiClient(c: Context) {
             }.build()
     }
 
-    private fun buildTokenApi(): NeWorkApi {
+    private fun buildTokenApi(): TokenApi {
 
         return Retrofit.Builder()
             .baseUrl(TEST_BASE_URL)
@@ -62,9 +62,11 @@ class ApiClient(c: Context) {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava3CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build()
-            .create(NeWorkApi::class.java)
+            .create(TokenApi::class.java)
     }
 
-    fun neWorkApi(): NeWorkApi = buildTokenApi()
+    fun neWorkApi(): NeWorkApi = retrofit.create(NeWorkApi::class.java)
+
+    fun tokenApi(): TokenApi = buildTokenApi()
 
 }
