@@ -1,5 +1,6 @@
 package ru.netology.nework.app.ui.auth
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,13 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import ru.netology.nework.R
-import ru.netology.nework.app.Loading
-import ru.netology.nework.app.Error
-import ru.netology.nework.app.SimpleTextWatcher
-import ru.netology.nework.app.Success
+import ru.netology.nework.app.*
 import ru.netology.nework.databinding.FragmentAuthBinding
 
 class AuthFragment : Fragment() {
@@ -22,6 +21,12 @@ class AuthFragment : Fragment() {
     private var binding: FragmentAuthBinding? = null
 
     private val authViewModel: AuthViewModel by sharedViewModel()
+
+    private val loginWatcher: TextWatcher = object : SimpleTextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            authViewModel.onLoginChange(s)
+        }
+    }
     private val passWatcher: TextWatcher = object : SimpleTextWatcher {
         override fun afterTextChanged(s: Editable?) {
             authViewModel.onPasswordChange(s)
@@ -34,13 +39,15 @@ class AuthFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAuthBinding.inflate(inflater, container, false)
+        binding!!.loginText.addTextChangedListener(loginWatcher)
         binding!!.passwordText.addTextChangedListener(passWatcher)
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initAuthButton()
+        initButtons()
+
         authViewModel.authUiState.observe(viewLifecycleOwner) { state ->
             binding?.apply {
                 loginButton.isEnabled = state.loginOk && state.passwordOk
@@ -55,16 +62,19 @@ class AuthFragment : Fragment() {
                     hideLoading()
                     result.data?.apply {
                         if (isSuccess) {
-                            //navigate(R.id.action_authFragment_to_mainFragment)
-                        } else {
-                            Toasty.error(requireContext(), message, Toast.LENGTH_SHORT, true).show()
+                            findNavController().navigate(R.id.action_authFragment_to_homeFragment)
                         }
                     }
                 }
                 Loading -> showLoading()
-                Error -> hideLoading()
+                Error -> showError(result.t!!)
             }
         }
+    }
+
+    private fun showError(t: Throwable) {
+        hideLoading()
+        Toasty.error(requireContext(), t.message.orEmpty(), Toast.LENGTH_SHORT, true).show()
     }
 
     override fun onDestroyView() {
@@ -90,8 +100,9 @@ class AuthFragment : Fragment() {
         }
     }
 
-    private fun initAuthButton() {
+    private fun initButtons() {
         binding?.apply {
+            registrationHint.paintFlags = registrationHint.paintFlags or Paint.UNDERLINE_TEXT_FLAG
             loginButton.setOnClickListener {
                 authViewModel.auth()
             }

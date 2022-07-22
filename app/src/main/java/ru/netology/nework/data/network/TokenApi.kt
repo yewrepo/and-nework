@@ -1,5 +1,6 @@
 package ru.netology.nework.data.network
 
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.POST
@@ -13,10 +14,10 @@ interface TokenApi {
         @Field("login") login: String,
         @Field("password") password: String,
         @Field("name") name: String
-    ): TokenRemote
+    ): Response<TokenRemote>
 
     @POST("/api/users/authentication/")
     suspend fun authentication(
         @Body data: AuthRequestData
-    ): TokenRemote
+    ): Response<TokenRemote>
 }
