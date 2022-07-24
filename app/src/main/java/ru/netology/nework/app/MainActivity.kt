@@ -37,8 +37,10 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.appBar.isVisible = destination.id != R.id.authFragment
-            binding.navView.isVisible = destination.id != R.id.authFragment
+            val showAppBar = destination.id != R.id.authFragment
+                    && destination.id != R.id.registerFragment
+            binding.appBar.isVisible = showAppBar
+            binding.navView.isVisible = showAppBar
 
         }
 

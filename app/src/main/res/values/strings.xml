@@ -11,4 +11,9 @@
     <string name="action_login">Login</string>
     <string name="error_password">Password must be not empty</string>
     <string name="registration_hint">Need account? Register!</string>
+    <string name="register_title">Регистрация</string>
+    <string name="action_register">Registration</string>
+    <string name="name_hint">Name</string>
+    <string name="error_name">Name can\'t be empty</string>
+    <string name="error_login">Login can\'t be empty</string>
 </resources>

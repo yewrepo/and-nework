@@ -1,7 +1,9 @@
 package ru.netology.nework.domain
 
-interface TokenDataSource {
-    fun getToken(): String?
+import ru.netology.nework.model.user.Token
 
-    fun setToken(token: String)
+interface TokenDataSource {
+    fun getToken(): Token?
+
+    fun setToken(token: Token)
 }

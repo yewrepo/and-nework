@@ -2,12 +2,21 @@ package ru.netology.nework.data
 
 import ru.netology.nework.data.remote.AttachmentRemote
 import ru.netology.nework.data.remote.PostRemote
+import ru.netology.nework.data.remote.TokenRemote
 import ru.netology.nework.data.remote.UserRemote
 import ru.netology.nework.domain.Mapper
 import ru.netology.nework.model.attachment.Attachment
 import ru.netology.nework.model.attachment.AttachmentType
 import ru.netology.nework.model.post.Post
+import ru.netology.nework.model.user.Token
 import ru.netology.nework.model.user.User
+
+class TokenMapper : Mapper<TokenRemote, Token> {
+    override fun transform(data: TokenRemote) = Token(
+        id = data.id,
+        token = data.token
+    )
+}
 
 class UserMapper : Mapper<UserRemote, User> {
     override fun transform(data: UserRemote) = User(

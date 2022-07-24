@@ -1,31 +1,29 @@
 package ru.netology.nework.app.ui.auth
 
-import android.app.Application
 import android.text.Editable
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ru.netology.nework.app.Resource
 import ru.netology.nework.app.getOrThrow
+import ru.netology.nework.data.TokenMapper
 import ru.netology.nework.data.network.TokenApi
 import ru.netology.nework.data.remote.AuthRequestData
+import ru.netology.nework.domain.TokenDataSource
 import ru.netology.nework.model.AuthState
-import ru.netology.nework.model.AuthStateResult
+import ru.netology.nework.model.user.Token
 
 class AuthViewModel(
-    app: Application,
+    private val tokenDataSource: TokenDataSource,
     private val tokenApi: TokenApi
-) : AndroidViewModel(app) {
+) : ViewModel() {
 
     private val _authState: MutableLiveData<AuthState> = MutableLiveData(AuthState())
     val authUiState: LiveData<AuthState>
         get() = _authState
 
-    private val _authStateResult: MutableLiveData<Resource<AuthStateResult>> =
+    private val _authStateResult: MutableLiveData<Resource<Token>> =
         MutableLiveData()
-    val authStateResult: LiveData<Resource<AuthStateResult>>
+    val authStateResult: LiveData<Resource<Token>>
         get() = _authStateResult
 
     fun onLoginChange(s: Editable?) {
@@ -48,8 +46,11 @@ class AuthViewModel(
             viewModelScope.launch {
                 try {
                     val result =
-                        tokenApi.authentication(AuthRequestData(login, password)).getOrThrow()
-                    _authStateResult.postValue(Resource.success(AuthStateResult()))
+                        tokenApi.authentication(AuthRequestData(login, password)).getOrThrow().let {
+                            return@let TokenMapper().transform(it)
+                        }
+                    tokenDataSource.setToken(result)
+                    _authStateResult.postValue(Resource.success(result))
                 } catch (e: Exception) {
                     _authStateResult.postValue(Resource.error(e))
                 }
