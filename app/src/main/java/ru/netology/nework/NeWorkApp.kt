@@ -6,6 +6,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
 import ru.netology.nework.app.di.allModules
+import timber.log.Timber
 
 class NeWorkApp : MultiDexApplication(){
 
@@ -19,5 +20,9 @@ class NeWorkApp : MultiDexApplication(){
         }
 
         MultiDex.install(this)
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 }

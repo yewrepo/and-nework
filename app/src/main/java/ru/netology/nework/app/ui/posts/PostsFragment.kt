@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -49,6 +50,17 @@ class PostsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         recyclerManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
+        adapter?.addLoadStateListener { state ->
+            binding?.apply {
+
+                val isRefreshing = state.refresh is LoadState.Loading
+                val isRefreshingError = state.refresh is LoadState.Error
+                val isEmpty = adapter?.itemCount == 0
+                val isForced = isEmpty || (postsViewModel.updateRequest.value == true)
+
+            }
+        }
+
         binding?.apply {
             swiper.setOnRefreshListener(this@PostsFragment)
             recycler.layoutManager = recyclerManager
@@ -56,8 +68,15 @@ class PostsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         lifecycleScope.launchWhenCreated {
-            postsViewModel.data.collectLatest {
-                adapter?.submitData(it)
+            postsViewModel.data
+                .collectLatest { data ->
+                    adapter?.submitData(data)
+                }
+        }
+
+        postsViewModel.updateRequest.observe(viewLifecycleOwner) {
+            if (it == true) {
+                adapter?.refresh()
             }
         }
     }
@@ -68,6 +87,6 @@ class PostsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     override fun onRefresh() {
-        adapter?.refresh()
+        postsViewModel.requestRefreshing()
     }
 }
