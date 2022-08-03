@@ -4,8 +4,8 @@ import ru.netology.nework.model.Coordinates
 import java.time.LocalDateTime
 
 data class PostRemote(
-    val id: String,
-    val authorId: String,
+    val id: Long,
+    val authorId: Long,
     val authorAvatar: String?,
     val content: String,
     val published: LocalDateTime,

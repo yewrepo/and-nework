@@ -6,9 +6,9 @@
     app:startDestination="@id/authFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="ru.netology.nework.app.ui.wall.HomeFragment"
+        android:name="ru.netology.nework.app.ui.posts.PostsFragment"
         android:label="fragment_wall"
-        tools:layout="@layout/fragment_wall">
+        tools:layout="@layout/fragment_posts">
         <action
             android:id="@+id/action_homeFragment_to_jobsFragment"
             app:destination="@id/jobsFragment" />

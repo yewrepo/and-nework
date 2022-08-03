@@ -1,4 +1,4 @@
-package ru.netology.nework.data.local
+package ru.netology.nework.data.local.token
 
 import android.content.Context
 import com.google.gson.Gson

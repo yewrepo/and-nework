@@ -16,4 +16,7 @@
     <string name="name_hint">Name</string>
     <string name="error_name">Name can\'t be empty</string>
     <string name="error_login">Login can\'t be empty</string>
+    <string name="title_registration">Registration</string>
+    <string name="action_retry">Retry</string>
+    <string name="net_error_timeout">Network error</string>
 </resources>

@@ -1,5 +1,7 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
     id 'org.jetbrains.kotlin.android'
 }
 
@@ -81,7 +83,9 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion"
 
     implementation "androidx.room:room-runtime:$roomVersion"
-    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    implementation "androidx.room:room-paging:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
 
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$retrofitAdapterVersion"
     implementation "com.jakewharton.timber:timber:$loggerVersion"

@@ -12,6 +12,7 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import ru.netology.nework.BuildConfig
+import ru.netology.nework.data.local.token.TokenDataSourceImpl
 import java.time.LocalDateTime
 
 const val TEST_BASE_URL = "https://netomedia.ru/"
@@ -31,7 +32,8 @@ class ApiClient(c: Context) {
         .client(
             getRetrofitClient(
                 NeWorkApiInterceptor(
-                    buildTokenApi()
+                    buildTokenApi(),
+                    TokenDataSourceImpl(c)
                 )
             )
         )

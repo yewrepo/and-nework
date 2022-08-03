@@ -1,10 +1,14 @@
-package ru.netology.nework.model.post
+package ru.netology.nework.data.local
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import ru.netology.nework.model.Coordinates
 import ru.netology.nework.model.attachment.Attachment
 import java.time.LocalDateTime
 
-data class Post(
+@Entity
+data class PostEntity(
+    @PrimaryKey
     val id: Long,
     val authorId: Long,
     val authorAvatar: String,
