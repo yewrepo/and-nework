@@ -43,6 +43,7 @@ class PostToDtoMapper : Mapper<PostRemote, Post> {
     override fun transform(data: PostRemote) = Post(
         id = data.id,
         authorId = data.authorId,
+        author = data.author,
         authorAvatar = data.authorAvatar.orEmpty(),
         content = data.content,
         published = data.published,
@@ -62,6 +63,7 @@ class PostRemoteToDtoMapper : Mapper<PostRemote, PostEntity> {
     override fun transform(data: PostRemote) = PostEntity(
         id = data.id,
         authorId = data.authorId,
+        author = data.author,
         authorAvatar = data.authorAvatar.orEmpty(),
         content = data.content,
         published = data.published,
@@ -90,6 +92,7 @@ class DtoToPostMapper : Mapper<Post, PostEntity> {
     override fun transform(data: Post) = PostEntity(
         id = data.id,
         authorId = data.authorId,
+        author = data.author,
         authorAvatar = data.authorAvatar,
         content = data.content,
         published = data.published,
@@ -109,7 +112,8 @@ class PostEntityToDtoMapper : Mapper<PostEntity, Post> {
     override fun transform(data: PostEntity) = Post(
         id = data.id,
         authorId = data.authorId,
-        authorAvatar = data.authorAvatar.orEmpty(),
+        author = data.author,
+        authorAvatar = data.authorAvatar,
         content = data.content,
         published = data.published,
         coords = data.coords,

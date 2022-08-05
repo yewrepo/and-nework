@@ -11,6 +11,7 @@ data class PostEntity(
     @PrimaryKey
     val id: Long,
     val authorId: Long,
+    val author: String,
     val authorAvatar: String,
     val content: String,
     val published: LocalDateTime,

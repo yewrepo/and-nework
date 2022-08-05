@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 data class Post(
     val id: Long,
     val authorId: Long,
+    val author: String,
     val authorAvatar: String,
     val content: String,
     val published: LocalDateTime,

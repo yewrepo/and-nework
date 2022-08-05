@@ -20,4 +20,6 @@
     <string name="action_retry">Retry</string>
     <string name="net_error_timeout">Network error</string>
     <string name="description_avatar">avatar</string>
+    <string name="option_action_edit">Edit</string>
+    <string name="option_action_remove">Remove</string>
 </resources>
