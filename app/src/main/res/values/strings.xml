@@ -19,4 +19,5 @@
     <string name="title_registration">Registration</string>
     <string name="action_retry">Retry</string>
     <string name="net_error_timeout">Network error</string>
+    <string name="description_avatar">avatar</string>
 </resources>
