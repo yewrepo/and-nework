@@ -10,6 +10,7 @@ import ru.netology.nework.app.ApiError
 import ru.netology.nework.data.PostToEntityMapper
 import ru.netology.nework.data.db.AppDb
 import ru.netology.nework.data.local.PostRemoteKeyEntity
+import ru.netology.nework.data.network.Constants
 import ru.netology.nework.data.network.NeWorkApi
 import ru.netology.nework.model.post.Post
 import timber.log.Timber
@@ -29,9 +30,9 @@ class PostRemoteMediator constructor(
                 LoadType.REFRESH -> {
                     val id = postRemoteKeyDao.max()
                     if (id == null) {
-                        service.getLatest()
+                        service.getLatest(Constants.DEFAULT_PAGE_SIZE)
                     } else {
-                        service.getPostsAfter(id)
+                        service.getPostsAfter(id, Constants.DEFAULT_PAGE_SIZE)
                     }
 
                 }
@@ -42,7 +43,7 @@ class PostRemoteMediator constructor(
                     val id = postRemoteKeyDao.min() ?: return MediatorResult.Success(
                         endOfPaginationReached = false
                     )
-                    service.getPostsBefore(id)
+                    service.getPostsBefore(id, Constants.DEFAULT_PAGE_SIZE)
                 }
             }
 

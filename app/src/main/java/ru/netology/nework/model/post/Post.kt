@@ -11,7 +11,7 @@ data class Post(
     val content: String,
     val published: LocalDateTime,
     val coords: Coordinates?,
-    val link: String,
+    val link: String?,
     val likeOwnerIds: List<Int>,
     val mentionIds: List<Int>,
     val mentionedMe: Boolean,

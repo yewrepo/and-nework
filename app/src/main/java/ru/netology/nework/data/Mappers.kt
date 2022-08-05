@@ -90,7 +90,7 @@ class DtoToPostMapper : Mapper<Post, PostEntity> {
     override fun transform(data: Post) = PostEntity(
         id = data.id,
         authorId = data.authorId,
-        authorAvatar = data.authorAvatar.orEmpty(),
+        authorAvatar = data.authorAvatar,
         content = data.content,
         published = data.published,
         coords = data.coords,

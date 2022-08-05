@@ -7,7 +7,6 @@ import com.google.gson.Gson
 import ru.netology.nework.data.local.PostEntity
 import ru.netology.nework.model.Coordinates
 import ru.netology.nework.model.attachment.Attachment
-import ru.netology.nework.model.attachment.AttachmentType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -36,23 +35,28 @@ interface PostDao {
 
 class Converters {
     @TypeConverter
-    fun toAttachment(value: String): Attachment {
+    fun toAttachment(value: String): Attachment? {
         return Gson().fromJson(value, Attachment::class.java)
     }
 
     @TypeConverter
-    fun fromAttachment(attachment: Attachment): String {
+    fun fromAttachment(attachment: Attachment?): String {
         return Gson().toJson(attachment)
     }
 
 
     @TypeConverter
     fun toIntList(value: String): List<Int> {
-        return value.trim().splitToSequence(',')
-            .map {
-                it.toInt()
-            }
-            .toList()
+        return if (value.isBlank()) {
+            listOf()
+        } else
+            value
+                .trim()
+                .splitToSequence(',')
+                .map {
+                    it.trim().toInt()
+                }
+                .toList()
     }
 
     @TypeConverter
@@ -72,12 +76,12 @@ class Converters {
     }
 
     @TypeConverter
-    fun toCoordinates(value: String): Coordinates {
+    fun toCoordinates(value: String): Coordinates? {
         return Gson().fromJson(value, Coordinates::class.java)
     }
 
     @TypeConverter
-    fun fromCoordinates(coordinates: Coordinates): String {
+    fun fromCoordinates(coordinates: Coordinates?): String {
         return Gson().toJson(coordinates)
     }
 }
