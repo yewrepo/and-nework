@@ -71,6 +71,11 @@ class AuthFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        authViewModel.checkToken()
+    }
+
     private fun showError(t: Throwable) {
         hideLoading()
         Toasty.error(requireContext(), t.message.orEmpty(), Toast.LENGTH_SHORT, true).show()

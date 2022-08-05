@@ -57,4 +57,11 @@ class AuthViewModel(
             }
         }
     }
+
+    fun checkToken() {
+        val tokenData = tokenDataSource.getToken()
+        if (tokenData != null && tokenData.token.isNotEmpty()) {
+            _authStateResult.postValue(Resource.success(tokenData))
+        }
+    }
 }
