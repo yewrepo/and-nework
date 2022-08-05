@@ -58,6 +58,7 @@ class PostsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 val isEmpty = adapter?.itemCount == 0
                 val isForced = isEmpty || (postsViewModel.updateRequest.value == true)
 
+                binding?.swiper?.isRefreshing = isRefreshing
             }
         }
 

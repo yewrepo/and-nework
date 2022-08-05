@@ -47,6 +47,7 @@ class PostViewHolder(
             loadAvatar(this)
             binding.author.text = this.author
             binding.published.text = this.published.toCommon()
+            binding.content.text = this.content
         }
     }
 

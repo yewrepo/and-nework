@@ -36,7 +36,8 @@ class MainActivity : AppCompatActivity() {
             .setFallbackOnNavigateUpListener(::onSupportNavigateUp)
             .build()
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        navController
+            .addOnDestinationChangedListener { _, destination, _ ->
             val showAppBar = destination.id != R.id.authFragment
                     && destination.id != R.id.registerFragment
             binding.appBar.isVisible = showAppBar
