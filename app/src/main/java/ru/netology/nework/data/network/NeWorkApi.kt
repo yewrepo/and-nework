@@ -5,11 +5,15 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.netology.nework.data.remote.PostRemote
+import ru.netology.nework.data.remote.UserRemote
 
 interface NeWorkApi {
 
     @GET("api/my/wall/")
     suspend fun getMyWall(): Response<List<PostRemote>>
+
+    @GET("api/users/")
+    suspend fun getUsers(): Response<List<UserRemote>>
 
     @GET("api/posts/")
     suspend fun getPosts(): Response<List<PostRemote>>

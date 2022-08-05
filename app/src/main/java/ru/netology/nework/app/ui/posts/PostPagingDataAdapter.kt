@@ -12,7 +12,7 @@ val diffCallback = object : DiffUtil.ItemCallback<Post>() {
 }
 
 class PostPagingDataAdapter(
-    private val callback: (position: Int) -> Unit
+    private val callback: PostClickCallback
 ) : PagingDataAdapter<Post, PostViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {

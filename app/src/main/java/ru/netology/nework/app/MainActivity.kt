@@ -32,18 +32,24 @@ class MainActivity : AppCompatActivity() {
             .applyToView(binding.root)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        appBarConfiguration = AppBarConfiguration.Builder(R.id.authFragment)
+        appBarConfiguration = AppBarConfiguration.Builder(
+            setOf(
+                R.id.postsFragment,
+                R.id.eventsFragment,
+                R.id.profileFragment
+            )
+        )
             .setFallbackOnNavigateUpListener(::onSupportNavigateUp)
             .build()
 
         navController
             .addOnDestinationChangedListener { _, destination, _ ->
-            val showAppBar = destination.id != R.id.authFragment
-                    && destination.id != R.id.registerFragment
-            binding.appBar.isVisible = showAppBar
-            binding.navView.isVisible = showAppBar
+                val showAppBar = destination.id != R.id.authFragment
+                        && destination.id != R.id.registerFragment
+                binding.appBar.isVisible = showAppBar
+                binding.navView.isVisible = showAppBar
 
-        }
+            }
 
         setupActionBarWithNavController(navController, appBarConfiguration!!)
         binding.navView.setupWithNavController(navController)

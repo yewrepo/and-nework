@@ -23,4 +23,5 @@
     <string name="description_avatar">avatar</string>
     <string name="option_action_edit">Edit</string>
     <string name="option_action_remove">Remove</string>
+    <string name="title_posts">Posts</string>
 </resources>

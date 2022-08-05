@@ -35,12 +35,35 @@ class PostsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = PostPagingDataAdapter(callback = { position ->
-            adapter?.let {
-                it.snapshot()[position]?.apply {
+        adapter = PostPagingDataAdapter(callback = object :PostClickCallback{
+            override fun onOpenClick(position: Int) {
+                adapter?.let {
+                    it.snapshot()[position]?.apply {
 
+                    }
                 }
             }
+
+            override fun onLikeClick(position: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onRemoveClick(position: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onEditClick(position: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onYoutubeLinkClick(position: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onPhotoOpenClick(position: Int) {
+                TODO("Not yet implemented")
+            }
+
         })
 
         val concatAdapter = adapter?.withLoadStateHeaderAndFooter(
