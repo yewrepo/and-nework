@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_eventsFragment"
             app:destination="@id/eventsFragment" />
+        <action
+            android:id="@+id/action_postsFragment_to_authorCardFragment"
+            app:destination="@id/authorCardFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -47,4 +50,8 @@
         android:label="@string/title_events"
         app:launchSingleTop="true"
         tools:layout="@layout/fragment_events" />
+    <fragment
+        android:id="@+id/authorCardFragment"
+        android:name="ru.netology.nework.app.ui.author.AuthorCardFragment"
+        android:label="@string/title_author_card" />
 </navigation>

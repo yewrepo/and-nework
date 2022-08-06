@@ -44,11 +44,22 @@ class MainActivity : AppCompatActivity() {
 
         navController
             .addOnDestinationChangedListener { _, destination, _ ->
-                val showAppBar = destination.id != R.id.authFragment
-                        && destination.id != R.id.registerFragment
-                binding.appBar.isVisible = showAppBar
-                binding.navView.isVisible = showAppBar
 
+                val showAppBar = arrayOf(
+                    R.id.postsFragment,
+                    R.id.eventsFragment,
+                    R.id.profileFragment,
+                    R.id.authorCardFragment
+                ).contains(destination.id)
+
+                val showNavBar = arrayOf(
+                    R.id.postsFragment,
+                    R.id.eventsFragment,
+                    R.id.profileFragment
+                ).contains(destination.id)
+
+                binding.appBar.isVisible = showAppBar
+                binding.navView.isVisible = showNavBar
             }
 
         setupActionBarWithNavController(navController, appBarConfiguration!!)

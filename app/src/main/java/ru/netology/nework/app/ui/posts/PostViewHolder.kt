@@ -22,6 +22,9 @@ class PostViewHolder(
         binding.root.setOnClickListener {
             callback.onOpenClick(bindingAdapterPosition)
         }
+        binding.avatar.setOnClickListener {
+            callback.onAuthorOpenClick(bindingAdapterPosition)
+        }
         binding.menu.setOnClickListener {
             PopupMenu(it.context, it).apply {
                 inflate(R.menu.post_options)

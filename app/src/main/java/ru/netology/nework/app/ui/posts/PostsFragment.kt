@@ -4,14 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import ru.netology.nework.R
+import ru.netology.nework.app.ui.author.AuthorCardFragment.Companion.userData
+import ru.netology.nework.app.ui.fetchUserData
 import ru.netology.nework.app.ui.loading.LoadingStateAdapter
 import ru.netology.nework.databinding.FragmentPostsBinding
 
@@ -35,11 +41,24 @@ class PostsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = PostPagingDataAdapter(callback = object :PostClickCallback{
+        adapter = PostPagingDataAdapter(callback = object : PostClickCallback {
             override fun onOpenClick(position: Int) {
                 adapter?.let {
                     it.snapshot()[position]?.apply {
 
+                    }
+                }
+            }
+
+            override fun onAuthorOpenClick(position: Int) {
+                adapter?.let {
+                    it.snapshot()[position]?.apply {
+                        findNavController()
+                            .navigate(
+                                R.id.action_postsFragment_to_authorCardFragment,
+                                Bundle().also { bundle ->
+                                    bundle.userData = this.fetchUserData()
+                                })
                     }
                 }
             }
@@ -82,6 +101,17 @@ class PostsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 val isForced = isEmpty || (postsViewModel.updateRequest.value == true)
 
                 binding?.swiper?.isRefreshing = isRefreshing
+
+                if (isRefreshingError) {
+                    Toasty
+                        .error(
+                            requireContext(),
+                            R.string.net_error_timeout,
+                            Toast.LENGTH_SHORT,
+                            true
+                        )
+                        .show()
+                }
             }
         }
 
