@@ -23,7 +23,7 @@
             app:shapeAppearanceOverlay="@style/circleAvatar"
             app:srcCompat="@drawable/post_avatar_drawable" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/author"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -31,6 +31,8 @@
             android:layout_marginEnd="@dimen/default_spacing"
             android:ellipsize="end"
             android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/published"
             app:layout_constraintEnd_toStartOf="@id/menu"
             app:layout_constraintStart_toEndOf="@id/avatar"
@@ -38,13 +40,14 @@
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="Author" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/published"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_spacing"
             android:layout_marginEnd="@dimen/default_spacing"
             android:layout_marginBottom="@dimen/default_spacing"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             app:layout_constraintBottom_toBottomOf="@id/barrier"
             app:layout_constraintEnd_toStartOf="@id/menu"
             app:layout_constraintStart_toEndOf="@id/avatar"
@@ -54,7 +57,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/menu"
             style="@style/Widget.AppTheme.SimpleButton.OnlyIcon"
-            android:layout_width="wrap_content"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
             app:icon="@drawable/ic_baseline_more_vert_24"
             app:layout_constraintBottom_toBottomOf="@+id/avatar"
@@ -66,29 +69,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="avatar,published,menu" />
+            app:constraint_referenced_ids="avatar,published,menu"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="80dp" />
 
-        <TextView
-            android:id="@+id/content"
-            android:layout_width="0dp"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/barrier"
-            tools:text="content" />
+            app:layout_constraintTop_toBottomOf="@+id/barrier">
+
+            <ru.netology.nework.app.ui.AttachmentView
+                android:id="@+id/attachment_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="content" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/likes"
             style="@style/Widget.AppTheme.LikeCheckBox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="6dp"
             android:button="@drawable/like_state_list"
             android:paddingRight="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/content"
+            app:layout_constraintTop_toBottomOf="@+id/content_layout"
             tools:text="12k" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

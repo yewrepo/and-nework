@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import ru.netology.nework.R
-import ru.netology.nework.app.getContext
+import ru.netology.nework.app.loadUrl
 import ru.netology.nework.app.toCommon
 import ru.netology.nework.databinding.ViewHolderPostBinding
 import ru.netology.nework.model.post.Post
@@ -47,6 +46,7 @@ class PostViewHolder(
         plan?.apply {
             loadAvatar(this)
             setLikes(this)
+            binding.attachmentLayout.setAttachment(this.attachment)
             binding.author.text = this.author
             binding.published.text = this.published.toCommon()
             binding.content.text = this.content
@@ -54,12 +54,7 @@ class PostViewHolder(
     }
 
     private fun loadAvatar(post: Post) {
-        Glide.with(getContext())
-            .load(post.authorAvatar)
-            .timeout(10_000)
-            .placeholder(R.drawable.ic_broken_image_24dp)
-            .centerCrop()
-            .into(binding.avatar)
+        binding.avatar.loadUrl(post.authorAvatar)
     }
 
     private fun setLikes(post: Post) {

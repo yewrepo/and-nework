@@ -2,7 +2,6 @@ package ru.netology.nework.app.di
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -21,6 +20,7 @@ import ru.netology.nework.domain.PostDataRemoteSource
 import ru.netology.nework.domain.PostDataRepository
 import ru.netology.nework.domain.TokenDataSource
 
+@Suppress("USELESS_CAST")
 val appModule = module {
 
     single { TokenDataSourceImpl(get()) as TokenDataSource }
@@ -34,7 +34,7 @@ val appModule = module {
             .build() as AppDb
     }
     single {
-        val database =  Room.databaseBuilder(androidContext(), AppDb::class.java, "app.db")
+        val database = Room.databaseBuilder(androidContext(), AppDb::class.java, "app.db")
             .setJournalMode(RoomDatabase.JournalMode.AUTOMATIC)
             .fallbackToDestructiveMigrationOnDowngrade()
             .allowMainThreadQueries()

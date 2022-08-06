@@ -2,9 +2,12 @@ package ru.netology.nework.app
 
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import retrofit2.Response
+import ru.netology.nework.R
 import ru.netology.nework.data.remote.ErrorRemote
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -33,3 +36,12 @@ fun <T> Response<T>.getOrThrow(): T {
 fun View.getInflater() = LayoutInflater.from(context)
 
 fun RecyclerView.ViewHolder.getContext() = itemView.context!!
+
+fun ImageView.loadUrl(url: String) {
+    Glide.with(context)
+        .load(url)
+        .timeout(10_000)
+        .placeholder(R.drawable.ic_broken_image_24dp)
+        .centerCrop()
+        .into(this)
+}
