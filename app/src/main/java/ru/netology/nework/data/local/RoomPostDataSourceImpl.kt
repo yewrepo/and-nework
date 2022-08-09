@@ -49,4 +49,9 @@ class RoomPostDataSourceImpl(
             PostEntityToDtoMapper().transform(it)
         } ?: emptyList()
     }
+
+    override suspend fun save(post: Post): Post {
+        dao.insert(DtoToPostMapper().transform(post))
+        return post
+    }
 }

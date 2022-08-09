@@ -39,6 +39,28 @@ class RetrofitPostDataSourceImpl(
         }
     }
 
+    override suspend fun unlikePost(postId: Long): Post {
+        return handleError {
+            return@handleError api
+                .unlikePost(postId)
+                .getOrThrow()
+                .let {
+                    PostToDtoMapper().transform(it)
+                }
+        }
+    }
+
+    override suspend fun likePost(postId: Long): Post {
+        return handleError {
+            return@handleError api
+                .likePost(postId)
+                .getOrThrow()
+                .let {
+                    PostToDtoMapper().transform(it)
+                }
+        }
+    }
+
     private suspend fun <T> handleError(block: suspend () -> T): T {
         try {
             return block()

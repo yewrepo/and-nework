@@ -15,7 +15,7 @@ data class PostRemote(
     val likeOwnerIds: List<Int>,
     val mentionIds: List<Int>,
     val mentionedMe: Boolean,
-    val likedByMe: Boolean,
+    val likedByMe: Boolean, // не работает
     val attachment: AttachmentRemote?,
     val ownedByMe: Boolean
 )

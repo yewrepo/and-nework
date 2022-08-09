@@ -1,11 +1,7 @@
 package ru.netology.nework.app.ui.posts
 
+import ru.netology.nework.app.model.PostActionType
+
 interface PostClickCallback {
-    fun onOpenClick(position: Int)
-    fun onAuthorOpenClick(position: Int)
-    fun onLikeClick(position: Int)
-    fun onRemoveClick(position: Int)
-    fun onEditClick(position: Int)
-    fun onYoutubeLinkClick(position: Int)
-    fun onPhotoOpenClick(position: Int)
+    fun onClick(position: Int, type: PostActionType)
 }

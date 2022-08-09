@@ -1,4 +1,4 @@
-package ru.netology.nework.app.ui.author.model
+package ru.netology.nework.app.model
 
 import android.os.Bundle
 import android.os.Parcel

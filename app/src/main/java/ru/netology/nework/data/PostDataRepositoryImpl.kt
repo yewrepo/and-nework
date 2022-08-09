@@ -18,7 +18,7 @@ class PostDataRepositoryImpl(
     private val remoteSource: PostDataRemoteSource,
     private val localSource: PostDataLocalSource,
     mediator: PostRemoteMediator
-): PostDataRepository {
+) : PostDataRepository {
 
     @OptIn(ExperimentalPagingApi::class)
     override val data: Flow<PagingData<Post>> = Pager(
@@ -36,6 +36,20 @@ class PostDataRepositoryImpl(
 
     override suspend fun getAll(): List<Post> {
         remoteSource.getAll().let {
+            localSource.save(it)
+            return it
+        }
+    }
+
+    override suspend fun unlikePost(postId: Long): Post {
+        remoteSource.unlikePost(postId).let {
+            localSource.save(it)
+            return it
+        }
+    }
+
+    override suspend fun likePost(postId: Long): Post {
+        remoteSource.likePost(postId).let {
             localSource.save(it)
             return it
         }

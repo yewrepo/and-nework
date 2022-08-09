@@ -60,7 +60,7 @@ class AuthViewModel(
 
     fun checkToken() {
         val tokenData = tokenDataSource.getToken()
-        if (tokenData != null && tokenData.token.isNotEmpty()) {
+        if (tokenData != null && tokenData.token?.isNotEmpty() == true) {
             _authStateResult.postValue(Resource.success(tokenData))
         }
     }

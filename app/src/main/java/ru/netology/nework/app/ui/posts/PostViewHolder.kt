@@ -7,6 +7,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nework.R
 import ru.netology.nework.app.loadUrl
+import ru.netology.nework.app.model.PostActionType
 import ru.netology.nework.app.toCommon
 import ru.netology.nework.databinding.ViewHolderPostBinding
 import ru.netology.nework.model.post.Post
@@ -20,10 +21,13 @@ class PostViewHolder(
 
     init {
         binding.root.setOnClickListener {
-            callback.onOpenClick(bindingAdapterPosition)
+            callback.onClick(bindingAdapterPosition, PostActionType.OPEN)
         }
         binding.avatar.setOnClickListener {
-            callback.onAuthorOpenClick(bindingAdapterPosition)
+            callback.onClick(bindingAdapterPosition, PostActionType.AUTHOR_WALL)
+        }
+        binding.likes.setOnCheckedChangeListener { _, _ ->
+            callback.onClick(bindingAdapterPosition, PostActionType.LIKE)
         }
         binding.menu.setOnClickListener {
             PopupMenu(it.context, it).apply {
@@ -31,11 +35,11 @@ class PostViewHolder(
                 setOnMenuItemClickListener { item ->
                     return@setOnMenuItemClickListener when (item.itemId) {
                         R.id.remove -> {
-                            callback.onRemoveClick(bindingAdapterPosition)
+                            callback.onClick(bindingAdapterPosition, PostActionType.REMOVE)
                             true
                         }
                         R.id.edit -> {
-                            callback.onEditClick(bindingAdapterPosition)
+                            callback.onClick(bindingAdapterPosition, PostActionType.EDIT)
                             true
                         }
                         else -> false

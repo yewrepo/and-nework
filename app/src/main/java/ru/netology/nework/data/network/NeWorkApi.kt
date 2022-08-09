@@ -1,9 +1,7 @@
 package ru.netology.nework.data.network
 
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 import ru.netology.nework.data.remote.PostRemote
 import ru.netology.nework.data.remote.UserRemote
 
@@ -66,5 +64,15 @@ interface NeWorkApi {
         @Path("author_id") authorId: Int,
         @Path("post_id") postId: Long
     ): Response<List<PostRemote>>
-    
+
+    @POST("/api/posts/{post_id}/likes/")
+    suspend fun likePost(
+        @Path("post_id") postId: Long
+    ): Response<PostRemote>
+
+    @DELETE("/api/posts/{post_id}/likes/")
+    suspend fun unlikePost(
+        @Path("post_id") postId: Long
+    ): Response<PostRemote>
+
 }

@@ -16,8 +16,7 @@ import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import ru.netology.nework.R
-import ru.netology.nework.app.ui.author.AuthorCardFragment.Companion.userData
-import ru.netology.nework.app.ui.fetchUserData
+import ru.netology.nework.app.model.PostActionType
 import ru.netology.nework.app.ui.loading.LoadingStateAdapter
 import ru.netology.nework.databinding.FragmentPostsBinding
 
@@ -42,47 +41,13 @@ class PostsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = PostPagingDataAdapter(callback = object : PostClickCallback {
-            override fun onOpenClick(position: Int) {
+            override fun onClick(position: Int, type: PostActionType) {
                 adapter?.let {
                     it.snapshot()[position]?.apply {
-
+                        postsViewModel.openRequest(this, type)
                     }
                 }
             }
-
-            override fun onAuthorOpenClick(position: Int) {
-                adapter?.let {
-                    it.snapshot()[position]?.apply {
-                        findNavController()
-                            .navigate(
-                                R.id.action_postsFragment_to_authorCardFragment,
-                                Bundle().also { bundle ->
-                                    bundle.userData = this.fetchUserData()
-                                })
-                    }
-                }
-            }
-
-            override fun onLikeClick(position: Int) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onRemoveClick(position: Int) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onEditClick(position: Int) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onYoutubeLinkClick(position: Int) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onPhotoOpenClick(position: Int) {
-                TODO("Not yet implemented")
-            }
-
         })
 
         val concatAdapter = adapter?.withLoadStateHeaderAndFooter(
@@ -132,6 +97,27 @@ class PostsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             if (it == true) {
                 adapter?.refresh()
             }
+        }
+
+        postsViewModel.postActionRequest.observe(viewLifecycleOwner) {
+            when (it.actionRequest) {
+                PostActionType.OPEN -> TODO()
+                PostActionType.AUTHOR_WALL -> {
+                    findNavController()
+                        .navigate(R.id.action_postsFragment_to_authorCardFragment, it.bundle)
+                }
+                PostActionType.LIKE -> {
+                    postsViewModel.like(it.postId, it.ownedByMe)
+                }
+                PostActionType.REMOVE -> TODO()
+                PostActionType.EDIT -> TODO()
+            }
+            /* findNavController()
+                 .navigate(
+                     R.id.action_postsFragment_to_authorCardFragment,
+                     Bundle().also { bundle ->
+                         bundle.userData = this.fetchUserData()
+                     })*/
         }
     }
 

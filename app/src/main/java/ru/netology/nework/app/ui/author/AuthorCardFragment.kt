@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.netology.nework.app.loadUrl
-import ru.netology.nework.app.ui.author.model.UserData
-import ru.netology.nework.app.ui.author.model.UserDataArg
+import ru.netology.nework.app.model.UserData
+import ru.netology.nework.app.model.UserDataArg
 import ru.netology.nework.databinding.FragmentAuthorCardBinding
 
 class AuthorCardFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
