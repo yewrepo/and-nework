@@ -37,6 +37,7 @@ class PostsViewModel(
             PostActionType.AUTHOR_WALL -> Bundle().also { bundle ->
                 bundle.userData = post.fetchUserData()
             }
+            PostActionType.OPEN_MAP -> Bundle()
             PostActionType.LIKE -> Bundle()
             PostActionType.REMOVE -> Bundle()
             PostActionType.EDIT -> Bundle()

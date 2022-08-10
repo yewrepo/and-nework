@@ -111,6 +111,9 @@ class PostsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 }
                 PostActionType.REMOVE -> TODO()
                 PostActionType.EDIT -> TODO()
+                PostActionType.OPEN_MAP -> {
+
+                }
             }
         }
     }

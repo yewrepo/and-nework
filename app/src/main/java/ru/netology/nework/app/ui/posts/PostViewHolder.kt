@@ -12,6 +12,7 @@ import ru.netology.nework.app.model.PostActionType
 import ru.netology.nework.app.toCommon
 import ru.netology.nework.databinding.ViewHolderPostBinding
 import ru.netology.nework.model.post.Post
+import ru.netology.nework.model.post.hasCoordinates
 
 class PostViewHolder(
     private val binding: ViewHolderPostBinding,
@@ -29,6 +30,9 @@ class PostViewHolder(
         }
         binding.likes.setOnCheckedChangeListener { _, _ ->
             callback.onClick(bindingAdapterPosition, PostActionType.LIKE)
+        }
+        binding.mapButton.setOnClickListener {
+            callback.onClick(bindingAdapterPosition, PostActionType.OPEN_MAP)
         }
         binding.menu.setOnClickListener {
             PopupMenu(it.context, it).apply {
@@ -59,6 +63,7 @@ class PostViewHolder(
             binding.author.text = this.author
             binding.published.text = this.published.toCommon()
             binding.content.text = this.content
+            binding.mapButton.isVisible = this.hasCoordinates()
         }
     }
 

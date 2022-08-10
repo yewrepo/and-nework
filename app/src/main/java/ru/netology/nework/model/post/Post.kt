@@ -21,3 +21,8 @@ data class Post(
     val ownedByMe: Boolean,
     val isNew: Boolean
 )
+
+
+fun Post.hasCoordinates(): Boolean {
+    return coords != null && coords.lat != 0.0 && coords.long != 0.0
+}
