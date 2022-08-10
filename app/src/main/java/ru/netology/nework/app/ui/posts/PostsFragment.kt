@@ -112,12 +112,6 @@ class PostsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 PostActionType.REMOVE -> TODO()
                 PostActionType.EDIT -> TODO()
             }
-            /* findNavController()
-                 .navigate(
-                     R.id.action_postsFragment_to_authorCardFragment,
-                     Bundle().also { bundle ->
-                         bundle.userData = this.fetchUserData()
-                     })*/
         }
     }
 

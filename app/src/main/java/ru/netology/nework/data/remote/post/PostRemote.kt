@@ -1,5 +1,6 @@
-package ru.netology.nework.data.remote
+package ru.netology.nework.data.remote.post
 
+import ru.netology.nework.data.remote.AttachmentRemote
 import ru.netology.nework.model.Coordinates
 import java.time.LocalDateTime
 

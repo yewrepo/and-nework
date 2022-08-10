@@ -7,18 +7,16 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import ru.netology.nework.app.ui.auth.AuthViewModel
 import ru.netology.nework.app.ui.auth.RegistrationViewModel
+import ru.netology.nework.app.ui.author.AuthorWallViewModel
 import ru.netology.nework.app.ui.posts.PostsViewModel
 import ru.netology.nework.data.PostDataRepositoryImpl
 import ru.netology.nework.data.db.AppDb
 import ru.netology.nework.data.local.RoomPostDataSourceImpl
 import ru.netology.nework.data.local.token.TokenDataSourceImpl
 import ru.netology.nework.data.network.ApiClient
-import ru.netology.nework.data.remote.PostRemoteMediator
-import ru.netology.nework.data.remote.RetrofitPostDataSourceImpl
-import ru.netology.nework.domain.PostDataLocalSource
-import ru.netology.nework.domain.PostDataRemoteSource
-import ru.netology.nework.domain.PostDataRepository
-import ru.netology.nework.domain.TokenDataSource
+import ru.netology.nework.data.remote.post.PostRemoteMediator
+import ru.netology.nework.data.remote.post.RetrofitPostDataSourceImpl
+import ru.netology.nework.domain.*
 
 @Suppress("USELESS_CAST")
 val appModule = module {
@@ -61,6 +59,11 @@ val appModule = module {
     }
     viewModel {
         PostsViewModel(
+            repository = get()
+        )
+    }
+    viewModel {
+        AuthorWallViewModel(
             repository = get()
         )
     }

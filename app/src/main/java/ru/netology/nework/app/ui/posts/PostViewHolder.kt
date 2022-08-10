@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nework.R
 import ru.netology.nework.app.loadUrl
@@ -31,7 +32,7 @@ class PostViewHolder(
         }
         binding.menu.setOnClickListener {
             PopupMenu(it.context, it).apply {
-                inflate(R.menu.post_options)
+                inflate(R.menu.post_options_owned)
                 setOnMenuItemClickListener { item ->
                     return@setOnMenuItemClickListener when (item.itemId) {
                         R.id.remove -> {
@@ -53,6 +54,7 @@ class PostViewHolder(
         plan?.apply {
             loadAvatar(this)
             setLikes(this)
+            binding.menu.isVisible = this.ownedByMe
             binding.attachmentLayout.setAttachment(this.attachment)
             binding.author.text = this.author
             binding.published.text = this.published.toCommon()

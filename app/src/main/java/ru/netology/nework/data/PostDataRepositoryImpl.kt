@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import ru.netology.nework.data.remote.PostRemoteMediator
+import ru.netology.nework.data.remote.post.PostRemoteMediator
 import ru.netology.nework.domain.PostDataLocalSource
 import ru.netology.nework.domain.PostDataRemoteSource
 import ru.netology.nework.domain.PostDataRepository

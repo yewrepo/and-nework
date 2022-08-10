@@ -1,7 +1,5 @@
-package ru.netology.nework.data.remote
+package ru.netology.nework.data.remote.post
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import ru.netology.nework.app.NetworkError
 import ru.netology.nework.app.UnknownError
 import ru.netology.nework.app.getOrThrow
@@ -14,8 +12,6 @@ import java.io.IOException
 class RetrofitPostDataSourceImpl(
     private val api: NeWorkApi
 ) : PostDataRemoteSource {
-
-    override fun get(): Flow<List<Post>> = flow { }
 
     override suspend fun getNewer(id: Long): List<Post> {
         return handleError {

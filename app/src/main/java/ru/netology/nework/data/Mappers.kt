@@ -2,7 +2,7 @@ package ru.netology.nework.data
 
 import ru.netology.nework.data.local.PostEntity
 import ru.netology.nework.data.remote.AttachmentRemote
-import ru.netology.nework.data.remote.PostRemote
+import ru.netology.nework.data.remote.post.PostRemote
 import ru.netology.nework.data.remote.TokenRemote
 import ru.netology.nework.data.remote.UserRemote
 import ru.netology.nework.domain.Mapper

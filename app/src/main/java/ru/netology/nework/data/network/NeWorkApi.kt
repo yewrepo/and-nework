@@ -2,7 +2,7 @@ package ru.netology.nework.data.network
 
 import retrofit2.Response
 import retrofit2.http.*
-import ru.netology.nework.data.remote.PostRemote
+import ru.netology.nework.data.remote.post.PostRemote
 import ru.netology.nework.data.remote.UserRemote
 
 interface NeWorkApi {
@@ -48,18 +48,18 @@ interface NeWorkApi {
 
     @GET("api/{author_id}/wall/{post_id}/after")
     suspend fun getAuthorWallAfter(
-        @Path("author_id") authorId: Int,
+        @Path("author_id") authorId: Long,
         @Path("post_id") postId: Long
     ): Response<List<PostRemote>>
 
     @GET("api/{author_id}/wall/{post_id}/before")
     suspend fun getAuthorWallBefore(
-        @Query("count") count: Int,
-        @Path("author_id") authorId: Int,
-        @Path("post_id") postId: Long
+        @Path("author_id") authorId: Long,
+        @Path("post_id") postId: Long,
+        @Query("count") count: Int
     ): Response<List<PostRemote>>
 
-   @GET("api/{author_id}/wall/{post_id}/newer")
+    @GET("api/{author_id}/wall/{post_id}/newer")
     suspend fun getAuthorWallNewer(
         @Path("author_id") authorId: Int,
         @Path("post_id") postId: Long

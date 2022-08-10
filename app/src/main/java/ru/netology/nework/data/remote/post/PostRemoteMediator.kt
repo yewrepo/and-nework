@@ -1,4 +1,4 @@
-package ru.netology.nework.data.remote
+package ru.netology.nework.data.remote.post
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -12,6 +12,7 @@ import ru.netology.nework.data.db.AppDb
 import ru.netology.nework.data.local.PostRemoteKeyEntity
 import ru.netology.nework.data.network.Constants
 import ru.netology.nework.data.network.NeWorkApi
+import ru.netology.nework.data.remote.ErrorRemote
 import ru.netology.nework.model.post.Post
 import timber.log.Timber
 
