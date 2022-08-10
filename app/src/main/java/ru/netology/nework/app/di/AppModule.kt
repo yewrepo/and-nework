@@ -10,12 +10,14 @@ import ru.netology.nework.app.ui.auth.RegistrationViewModel
 import ru.netology.nework.app.ui.author.AuthorWallViewModel
 import ru.netology.nework.app.ui.posts.PostsViewModel
 import ru.netology.nework.data.PostDataRepositoryImpl
+import ru.netology.nework.data.WallDataRepositoryImpl
 import ru.netology.nework.data.db.AppDb
 import ru.netology.nework.data.local.RoomPostDataSourceImpl
 import ru.netology.nework.data.local.token.TokenDataSourceImpl
 import ru.netology.nework.data.network.ApiClient
 import ru.netology.nework.data.remote.post.PostRemoteMediator
 import ru.netology.nework.data.remote.post.RetrofitPostDataSourceImpl
+import ru.netology.nework.data.remote.wall.WallDataRemoteSourceImpl
 import ru.netology.nework.domain.*
 
 @Suppress("USELESS_CAST")
@@ -42,8 +44,12 @@ val appModule = module {
 
     factory { PostRemoteMediator(get(), get()) }
     single { RoomPostDataSourceImpl(get()) as PostDataLocalSource }
+
     factory { RetrofitPostDataSourceImpl(get()) as PostDataRemoteSource }
-    single { PostDataRepositoryImpl(get(), get(), get()) as PostDataRepository }
+    factory { PostDataRepositoryImpl(get(), get(), get()) as PostDataRepository }
+
+    factory { WallDataRemoteSourceImpl(get()) as WallDataRemoteSource }
+    factory { WallDataRepositoryImpl(get()) as WallDataRepository }
 
     viewModel {
         AuthViewModel(

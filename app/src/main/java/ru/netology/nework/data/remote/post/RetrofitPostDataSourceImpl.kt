@@ -1,13 +1,11 @@
 package ru.netology.nework.data.remote.post
 
-import ru.netology.nework.app.NetworkError
-import ru.netology.nework.app.UnknownError
 import ru.netology.nework.app.getOrThrow
 import ru.netology.nework.data.PostToDtoMapper
+import ru.netology.nework.data.handleError
 import ru.netology.nework.data.network.NeWorkApi
 import ru.netology.nework.domain.PostDataRemoteSource
 import ru.netology.nework.model.post.Post
-import java.io.IOException
 
 class RetrofitPostDataSourceImpl(
     private val api: NeWorkApi
@@ -54,16 +52,6 @@ class RetrofitPostDataSourceImpl(
                 .let {
                     PostToDtoMapper().transform(it)
                 }
-        }
-    }
-
-    private suspend fun <T> handleError(block: suspend () -> T): T {
-        try {
-            return block()
-        } catch (e: IOException) {
-            throw NetworkError
-        } catch (e: Exception) {
-            throw UnknownError
         }
     }
 }

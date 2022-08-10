@@ -4,28 +4,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import kotlinx.coroutines.flow.collectLatest
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import ru.netology.nework.R
+import ru.netology.nework.app.Error
+import ru.netology.nework.app.Loading
+import ru.netology.nework.app.Success
 import ru.netology.nework.app.loadUrl
 import ru.netology.nework.app.model.PostActionType
 import ru.netology.nework.app.model.UserData
 import ru.netology.nework.app.model.UserDataArg
-import ru.netology.nework.app.ui.loading.LoadingStateAdapter
 import ru.netology.nework.app.ui.posts.PostClickCallback
-import ru.netology.nework.app.ui.posts.PostPagingDataAdapter
+import ru.netology.nework.app.ui.posts.PostDataAdapter
 import ru.netology.nework.app.ui.posts.PostsViewModel
 import ru.netology.nework.databinding.FragmentAuthorCardBinding
-import timber.log.Timber
+import ru.netology.nework.model.post.Post
 
 class AuthorCardFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    private var adapter: PostPagingDataAdapter? = null
+    private var adapter: PostDataAdapter? = null
     private var userData: UserData? = null
     private var binding: FragmentAuthorCardBinding? = null
 
@@ -50,41 +52,55 @@ class AuthorCardFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onViewCreated(view, savedInstanceState)
         displayUserData()
 
-        adapter = PostPagingDataAdapter(callback = object : PostClickCallback {
+        adapter = PostDataAdapter(callback = object : PostClickCallback {
             override fun onClick(position: Int, type: PostActionType) {
                 adapter?.let {
-                    it.snapshot()[position]?.apply {
+                    it.currentList[position]?.apply {
                         postsViewModel.openRequest(this, type)
                     }
                 }
             }
         })
 
-        val concatAdapter = adapter?.withLoadStateHeaderAndFooter(
-            header = LoadingStateAdapter { adapter?.retry() },
-            footer = LoadingStateAdapter { adapter?.retry() }
-        )
 
         val recyclerManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
         binding?.apply {
+            swiper.setOnRefreshListener(this@AuthorCardFragment)
             recycler.layoutManager = recyclerManager
-            recycler.adapter = concatAdapter
+            recycler.adapter = adapter
         }
 
-        adapter?.addLoadStateListener { state ->
-            binding?.apply {
-                val isRefreshing = state.refresh is LoadState.Loading
-                val isEnd = state.refresh.endOfPaginationReached
-                Timber.e("isRefreshing:$isRefreshing; isEnd: $isEnd")
+        authorWallViewModel.postList.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Error -> showError(resource.t!!)
+                Loading -> showLoading()
+                Success -> showData(resource.data!!)
             }
         }
+        authorWallViewModel.refresh(authorId = userData!!.authorId)
+    }
 
-        lifecycleScope.launchWhenCreated {
-            authorWallViewModel.getData(authorId = userData!!.authorId)
-                .collectLatest { data ->
-                    adapter?.submitData(data)
-                }
+    private fun showData(data: List<Post>) {
+        adapter?.submitList(data)
+        binding?.apply {
+            swiper.isRefreshing = false
+            val isEmpty = data.isEmpty()
+            swiper.isVisible = isEmpty.not()
+            emptyText.isVisible = isEmpty
+        }
+    }
+
+    private fun showLoading() {
+        binding?.apply {
+            swiper.isRefreshing = true
+        }
+    }
+
+    private fun showError(t: Throwable) {
+        binding?.apply {
+            swiper.isRefreshing = false
+            Toasty.error(requireContext(), R.string.net_error_timeout).show()
         }
     }
 
@@ -98,7 +114,7 @@ class AuthorCardFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     override fun onRefresh() {
-        TODO("Not yet implemented")
+        authorWallViewModel.refresh(authorId = userData!!.authorId)
     }
 
     companion object {

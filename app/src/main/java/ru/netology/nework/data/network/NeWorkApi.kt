@@ -42,8 +42,8 @@ interface NeWorkApi {
 
     @GET("api/{author_id}/wall/latest")
     suspend fun getAuthorWallLatest(
-        @Query("count") count: Int,
-        @Path("author_id") postId: Int
+        @Path("author_id") postId: Long,
+        @Query("count") count: Int
     ): Response<List<PostRemote>>
 
     @GET("api/{author_id}/wall/{post_id}/after")
