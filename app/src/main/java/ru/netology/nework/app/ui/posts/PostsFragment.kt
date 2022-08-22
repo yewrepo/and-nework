@@ -112,7 +112,8 @@ class PostsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 PostActionType.REMOVE -> TODO()
                 PostActionType.EDIT -> TODO()
                 PostActionType.OPEN_MAP -> {
-
+                    findNavController()
+                        .navigate(R.id.action_postsFragment_to_mapFragment, it.bundle)
                 }
             }
         }

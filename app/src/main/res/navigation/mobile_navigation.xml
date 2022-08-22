@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_postsFragment_to_authorCardFragment"
             app:destination="@id/authorCardFragment" />
+        <action
+            android:id="@+id/action_postsFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -53,5 +56,13 @@
     <fragment
         android:id="@+id/authorCardFragment"
         android:name="ru.netology.nework.app.ui.author.AuthorCardFragment"
-        android:label="@string/title_author_card" />
+        android:label="@string/title_author_card" >
+        <action
+            android:id="@+id/action_authorCardFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="ru.netology.nework.app.ui.map.MapFragment"
+        android:label="@string/title_map" />
 </navigation>

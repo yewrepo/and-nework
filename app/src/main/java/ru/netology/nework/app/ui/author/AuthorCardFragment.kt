@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -79,6 +80,21 @@ class AuthorCardFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             }
         }
         authorWallViewModel.refresh(authorId = userData!!.authorId)
+
+        postsViewModel.postActionRequest.observe(viewLifecycleOwner) {
+            when (it.actionRequest) {
+                PostActionType.OPEN -> TODO()
+                PostActionType.LIKE -> {
+                    postsViewModel.like(it.postId, it.ownedByMe)
+                }
+                PostActionType.REMOVE -> TODO()
+                PostActionType.EDIT -> TODO()
+                PostActionType.OPEN_MAP -> {
+                    findNavController()
+                        .navigate(R.id.action_authorCardFragment_to_mapFragment, it.bundle)
+                }
+            }
+        }
     }
 
     private fun showData(data: List<Post>) {

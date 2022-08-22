@@ -9,7 +9,9 @@ import ru.netology.nework.app.model.PostActionRequest
 import ru.netology.nework.app.model.PostActionType
 import ru.netology.nework.app.ui.SingleLiveEvent
 import ru.netology.nework.app.ui.author.AuthorCardFragment.Companion.userData
+import ru.netology.nework.app.ui.fetchCoordinatesData
 import ru.netology.nework.app.ui.fetchUserData
+import ru.netology.nework.app.ui.map.MapFragment.Companion.coordinatesData
 import ru.netology.nework.domain.PostDataRepository
 import ru.netology.nework.model.post.Post
 
@@ -37,7 +39,9 @@ class PostsViewModel(
             PostActionType.AUTHOR_WALL -> Bundle().also { bundle ->
                 bundle.userData = post.fetchUserData()
             }
-            PostActionType.OPEN_MAP -> Bundle()
+            PostActionType.OPEN_MAP -> Bundle().also { bundle ->
+                bundle.coordinatesData = post.fetchCoordinatesData()
+            }
             PostActionType.LIKE -> Bundle()
             PostActionType.REMOVE -> Bundle()
             PostActionType.EDIT -> Bundle()

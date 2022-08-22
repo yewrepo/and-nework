@@ -9,7 +9,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import dev.chrisbanes.insetter.Insetter
 import dev.chrisbanes.insetter.windowInsetTypesOf
+import org.koin.android.ext.android.inject
 import ru.netology.nework.R
+import ru.netology.nework.app.ui.map.MarkersViewModel
 import ru.netology.nework.databinding.ActivityMainBinding
 
 //https://netomedia.ru/swagger/
@@ -18,6 +20,8 @@ class MainActivity : AppCompatActivity() {
 
     private var appBarConfiguration: AppBarConfiguration? = null
     private lateinit var binding: ActivityMainBinding
+
+    private val viewModel: MarkersViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +53,8 @@ class MainActivity : AppCompatActivity() {
                     R.id.postsFragment,
                     R.id.eventsFragment,
                     R.id.profileFragment,
-                    R.id.authorCardFragment
+                    R.id.authorCardFragment,
+                    R.id.mapFragment
                 ).contains(destination.id)
 
                 val showNavBar = arrayOf(
@@ -64,5 +69,12 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration!!)
         binding.navView.setupWithNavController(navController)
+
+        binding.fab.setOnClickListener {
+            if ((navController.currentDestination?.id ?: -1) == R.id.mapFragment) {
+                viewModel.addMarkerClick()
+            }
+        }
+
     }
 }

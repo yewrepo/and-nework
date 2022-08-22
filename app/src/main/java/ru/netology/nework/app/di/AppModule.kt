@@ -8,7 +8,9 @@ import org.koin.dsl.module
 import ru.netology.nework.app.ui.auth.AuthViewModel
 import ru.netology.nework.app.ui.auth.RegistrationViewModel
 import ru.netology.nework.app.ui.author.AuthorWallViewModel
+import ru.netology.nework.app.ui.map.MarkersViewModel
 import ru.netology.nework.app.ui.posts.PostsViewModel
+import ru.netology.nework.data.MarkerRepositoryImpl
 import ru.netology.nework.data.PostDataRepositoryImpl
 import ru.netology.nework.data.WallDataRepositoryImpl
 import ru.netology.nework.data.db.AppDb
@@ -51,6 +53,8 @@ val appModule = module {
     factory { WallDataRemoteSourceImpl(get()) as WallDataRemoteSource }
     factory { WallDataRepositoryImpl(get()) as WallDataRepository }
 
+    factory {  MarkerRepositoryImpl() as MarkerRepository }
+
     viewModel {
         AuthViewModel(
             tokenDataSource = get(),
@@ -71,6 +75,12 @@ val appModule = module {
     viewModel {
         AuthorWallViewModel(
             repository = get()
+        )
+    }
+    viewModel {
+        MarkersViewModel(
+            repository = get(),
+            app = get()
         )
     }
 }
